@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<link rel="stylesheet" href="./select.css">
+		<style type="text/css">
+			body {
+				font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+				font-size: 14px;
+				line-height: 1.42857143;
+				color: #666;
+				margin: 0;
+				background-color: #F0F0F0;
+			}
+
+			.m {
+				width: 800px;
+				margin-left: auto;
+				margin-right: auto;
+				margin-top: 100px;
+			}
+
+			* {
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="m">
+			<div class=" selectPickerWrapper showYear" data-checks="0,0,0" data-model="">
+				<select class="hidden"></select>
+
+			</div>
+			<!-- <div class="selectPickerWrapper showCity" data-model="City">
+				<select class="hidden">
+					<option value="1">万源路</option>
+					<option value="2">漕宝路666号</option>
+					<option value="3">古美街道</option>
+					<option value="4">平南路888号</option>
+					<option value="5">合川路</option>
+					<option value="6">莲花路4545号</option>
+				</select>
+			</div> -->
+		</div>
+		<script src="./jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./select2.js"></script>
+		<script>
+			$(function() {
+				console.log('index中的函数');
+				var map = [{
+					"text": "1",
+					"val": "1"
+				}, {
+					"text": "2",
+					"val": "2"
+				}, {
+					"text": "3",
+					"val": "3"
+				}, {
+					"text": "4",
+					"val": "4"
+				}];
+				$(".showYear").data("init", JSON.stringify(map));
+				$(".showYear").mySelect({
+					showCancel: true,
+					showSearch: true,
+					multiple: true
+				});
+				$(".showCity").mySelect({
+					showCancel: false,
+					showSearch: true,
+					multiple: false
+				});
+				// $(".select-picker-search-checked").change(function(){
+				// 	console.log(11111111);
+				// })
+
+				// $(".select-picker-search-checked").bind('DOMNodeInserted', function(e) {
+				//     alert('element now contains: ' + $(e.target).html());
+				// });
+				let shower = $('.select-picker-search-checked');
+				// shower.on("focus", function() {
+				// 	// console.log($(this).text());
+				// 	console.log();
+				// 	let val = $(this).text().trim().replace(/^(,|，)+|(,|，)+$/g, '').replace(/，+/,',');
+				// 	if (val) {
+				// 		// console.log("有");
+				// 		var valArr = val.split(',');
+				// 		var ret = [];
+				// 		for (var i = 0; i < valArr.length; i++) {
+				// 			if (valArr.indexOf(valArr[i]) == i) {
+				// 				ret.push(valArr[i]);
+				// 			}
+				// 		};
+				// 		$(this).text(ret.join(','))
+
+				// 	} else {
+				// 		$(".select-picker-options-list-item").find('.duihao').addClass('duihao-nocheck')
+				// 		$(".select-picker-options-list-item").find('.duihao').removeClass('duihao-checked');
+				// 		// mySelect()._emptyAll()
+				// 	}
+				// });
+				shower.on("focus blur", function() {
+					// console.log($(this).text());
+					console.log($(this).text().length);
+					// let val = $(this).text().trim().replace(/^(,|，)+|(,|，)+$/g, '').replace(/，+/,',');
+					// .replace(/(，,)+|(,，)+|(,,)+|(，，)+/g,',');
+					if ($(this).text().length>0) {
+						// console.log("有");
+						let val = $(this).text().trim().replace(/，/g,',').replace(/,{1,}/g,',').replace(/^,|,$/g,'')
+						var valArr = val.split(',');
+						var ret = [];
+						for (var i = 0; i < valArr.length; i++) {
+							if (valArr.indexOf(valArr[i]) == i) {
+								ret.push(valArr[i]);
+							}
+						};
+						$(this).text(ret.join(','))
+				
+					} else {
+						$(".select-picker-options-list-item").find('.duihao').addClass('duihao-nocheck')
+						$(".select-picker-options-list-item").find('.duihao').removeClass('duihao-checked');
+						// mySelect()._emptyAll();
+					}
+				});
+				// shower.keyup(function(e) {
+					
+				// 	let nowHtml = $(this).text().trim();
+				// 	console.log(e.keyCode);
+				// 	if (e.keyCode==229) {
+				// 		return false;
+				// 	}
+				// })
+				$(".select-picker-options-serch input").keyup(function(){
+					$(this).css('cursor','search !important');
+				})
+				$(".select-picker-btn-cancel").click(function() {
+
+				})
+
+
+				// console.log(JSON.stringify(map));
+			});
+		</script>
+	</body>
+</html>
